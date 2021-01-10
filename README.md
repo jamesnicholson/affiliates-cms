@@ -1,1 +1,1 @@
-# affliates-cms
+# affiliates-cms
