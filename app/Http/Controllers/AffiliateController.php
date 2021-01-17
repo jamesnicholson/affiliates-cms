@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Affiliate;
 class AffiliateController extends Controller
 {
     /**
@@ -13,7 +13,7 @@ class AffiliateController extends Controller
      */
     public function index()
     {
-        //
+        return Affiliate::orderBy('name', 'DESC')->get();
     }
 
     /**
@@ -34,7 +34,11 @@ class AffiliateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $affiliate = new Affiliate;
+        var_dump($request->affiliate['name']);
+        $affiliate->name = $request->affiliate['name'];
+        $affiliate->save();
+        return $affiliate;
     }
 
     /**
