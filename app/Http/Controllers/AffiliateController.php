@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Affiliate;
+
 class AffiliateController extends Controller
 {
     /**
@@ -35,7 +36,6 @@ class AffiliateController extends Controller
     public function store(Request $request)
     {
         $affiliate = new Affiliate;
-        var_dump($request->affiliate['name']);
         $affiliate->name = $request->affiliate['name'];
         $affiliate->save();
         return $affiliate;
@@ -60,7 +60,7 @@ class AffiliateController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -72,7 +72,13 @@ class AffiliateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $affiliate = Affiliate::find($id);
+        if($affiliate){
+            $affiliate->name = $request->affiliate['name'];
+            $affiliate->save();
+            return $affiliate;
+        }
+        return false;
     }
 
     /**
@@ -83,6 +89,11 @@ class AffiliateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $affiliate = Affiliate::find($id);
+        if($affiliate){
+            $affiliate->delete();
+            return true;
+        }
+        return false;
     }
 }

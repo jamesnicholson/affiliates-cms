@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Link;
 
 class LinkController extends Controller
 {
@@ -13,7 +14,7 @@ class LinkController extends Controller
      */
     public function index()
     {
-        //
+        return Link::orderBy('url', 'DESC')->get();
     }
 
     /**
@@ -34,7 +35,10 @@ class LinkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $link = new Link;
+        $link->name = $request->link['url'];
+        $link->save();
+        return $link;
     }
 
     /**
@@ -68,7 +72,13 @@ class LinkController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $link = Link::find($id);
+        if($link){
+            $link->name = $request->link['url'];
+            $link->save();
+            return $link;
+        }
+        return false;
     }
 
     /**
@@ -79,6 +89,11 @@ class LinkController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $link = Link::find($id);
+        if($link){
+            $link->delete();
+            return true;
+        }
+        return false;
     }
 }
