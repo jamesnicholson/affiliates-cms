@@ -14,15 +14,18 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('affiliate_id')->unsigned()->index()->nullable();
-            $table->bigInteger('link_id')->unsigned()->index()->nullable();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('affiliate_id');
+            //$table->bigInteger('link_id')->unsigned()->index()->nullable();
             $table->string('name');
+            $table->string('url');
+            $table->string('description');  
             $table->timestamps();
-        });
-        Schema::table('products', function($table) {
-            $table->foreign('affiliate_id')->references('id')->on('affiliates');
-            $table->foreign('link_id')->references('id')->on('links');
+
+            $table->foreign('affiliate_id')
+                ->references('id')
+                ->on('affiliates')
+                ->onDelete('cascade');
         });
     }
 

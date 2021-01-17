@@ -14,9 +14,15 @@ class CreateAffiliatesTable extends Migration
     public function up()
     {
         Schema::create('affiliates', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
